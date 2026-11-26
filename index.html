@@ -1,207 +1,863 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal IT Portfolio of Marvzy0519">
-    <title>Marvzy0519 | IT Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Marvin N. Genovania | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Palette: dark espresso brown + glowing amber */
+        :root {
+            --bg-deep: #1A0802;
+            --bg-brown: #3A1605;
+            --bg-mid: #7A3A0A;
+            --amber: #E8890C;
+            --amber-bright: #FFB24A;
+            --glow: #FFE2B0;
+
+            --text: #F6E6D8;
+            --text-soft: #D9BFA8;
+            --text-muted: #B89A82;
+
+            --glass: rgba(255, 220, 180, .07);
+            --glass-hover: rgba(255, 220, 180, .13);
+            --glass-border: rgba(255, 220, 180, .22);
+
+            /* Same background for page + header + footer */
+            --page-bg:
+                /* bright diagonal light streak */
+                linear-gradient(32deg, transparent 48%, rgba(255, 226, 176, .0) 41%, rgba(255, 236, 200, .95) 46.6%, rgba(255, 190, 90, .7) 47.4%, rgba(255, 140, 20, .25) 52%, transparent 62%),
+                /* soft amber halo along the streak */
+                radial-gradient(ellipse 70% 38% at 62% 36%, rgba(255, 150, 30, .55), transparent 70%),
+                /* warm glow, top right */
+                radial-gradient(ellipse 60% 60% at 92% 0%, rgba(232, 137, 12, .55), transparent 65%),
+                /* warm glow, bottom */
+                radial-gradient(ellipse 80% 45% at 60% 110%, rgba(140, 60, 8, .75), transparent 70%),
+                /* dark core on the left */
+                radial-gradient(ellipse 55% 70% at 22% 45%, #1A0802 20%, transparent 80%),
+                linear-gradient(160deg, #2A0F03 0%, #4A1E06 100%);
+
+            --font: "Inter", "Segoe UI", Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 84px
+        }
+
+        body {
+            font-family: var(--font);
+            color: var(--text);
+            background: var(--bg-deep);
+            line-height: 1.7
+        }
+
+        /* Background, fixed to the screen while scrolling */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: var(--page-bg)
+        }
+
+        a {
+            color: inherit
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid var(--amber-bright);
+            outline-offset: 3px
+        }
+
+        /* Navigation: transparent so it shows the same background as the page */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            background: rgba(26, 8, 2, .25);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 220, 180, .1)
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: .5px;
+            text-decoration: none;
+            color: var(--text)
+        }
+
+        .logo span {
+            color: var(--amber-bright)
+        }
+
+        nav {
+            display: flex;
+            gap: 4px
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 14px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            color: var(--text-soft);
+            transition: background .2s, color .2s
+        }
+
+        nav a:hover {
+            background: var(--glass);
+            color: var(--text)
+        }
+
+        nav a.active {
+            background: var(--glass-hover);
+            border: 1px solid var(--glass-border);
+            padding: 5px 13px;
+            color: var(--text)
+        }
+
+        .menu-btn {
+            display: none;
+            font: 500 14px var(--font);
+            padding: 6px 16px;
+            background: var(--glass);
+            color: var(--text);
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            cursor: pointer
+        }
+
+        /* Sections */
+        section {
+            padding: 90px 10%;
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        .eyebrow {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--amber-bright);
+            margin-bottom: 6px
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 36px;
+            color: var(--text)
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 56px;
+            height: 4px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--amber-bright), transparent);
+            margin-top: 12px
+        }
+
+        /* Home */
+        .home {
+            min-height: 88vh;
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 48px;
+            align-items: center
+        }
+
+        .hello {
+            font-weight: 400;
+            color: var(--text-soft);
+            font-size: 18px
+        }
+
+        .home h1 {
+            font-size: clamp(36px, 5.6vw, 62px);
+            font-weight: 500;
+            line-height: 1.12;
+            letter-spacing: -.5px;
+            margin: 4px 0 14px;
+            background: linear-gradient(180deg, #FBEBDD 0%, #D9B9A0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: var(--text)
+        }
+
+        .role {
+            display: inline-block;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 5px 18px;
+            margin-bottom: 18px;
+            color: var(--text);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 999px
+        }
+
+        .intro {
+            max-width: 470px;
+            color: var(--text-soft)
+        }
+
+        .actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 28px
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 28px;
+            font-weight: 500;
+            font-size: 15px;
+            text-decoration: none;
+            color: var(--text);
+            background: linear-gradient(180deg, rgba(255, 170, 70, .35), rgba(120, 50, 8, .45));
+            border: 1px solid rgba(255, 190, 110, .45);
+            border-radius: 999px;
+            transition: transform .15s, box-shadow .15s, background .15s
+        }
+
+        .btn:hover {
+            background: linear-gradient(180deg, rgba(255, 170, 70, .55), rgba(150, 65, 10, .6));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 26px rgba(255, 140, 20, .35)
+        }
+
+        .btn-outline {
+            background: var(--glass);
+            border-color: var(--glass-border)
+        }
+
+        .btn-outline:hover {
+            background: var(--glass-hover);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, .35)
+        }
+
+        .photo-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto
+        }
+
+        .photo-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translate(16px, 16px);
+            border-radius: 32px;
+            background: linear-gradient(145deg, var(--amber), var(--bg-mid));
+            opacity: .7;
+            filter: blur(.5px)
+        }
+
+        .photo {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 32px;
+            border: 1px solid rgba(255, 210, 160, .5);
+            background: var(--bg-brown)
+        }
+
+        /* Glass cards */
+        .grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
+        }
+
+        .card {
+            padding: 28px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+            transition: transform .2s, box-shadow .2s, border-color .2s, background .2s
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            background: var(--glass-hover);
+            border-color: rgba(255, 190, 110, .6);
+            box-shadow: 0 16px 36px rgba(255, 130, 20, .18)
+        }
+
+        .card h3 {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            color: var(--text)
+        }
+
+        .card p {
+            color: var(--text-soft)
+        }
+
+        .meta {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--amber-bright) !important;
+            margin-bottom: 8px
+        }
+
+        /* About */
+        .about-card {
+            max-width: 760px
+        }
+
+        /* Skills */
+        .chips {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px
+        }
+
+        .chips li {
+            padding: 5px 16px;
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--text);
+            background: rgba(255, 220, 180, .06);
+            border: 1px solid var(--glass-border);
+            border-radius: 999px
+        }
+
+        .chips.accent li {
+            background: rgba(255, 160, 50, .16);
+            border-color: rgba(255, 190, 110, .5)
+        }
+
+        /* Projects */
+        .thumb {
+            display: grid;
+            place-items: center;
+            height: 150px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 22px;
+            letter-spacing: .5px;
+            color: var(--glow);
+            background:
+                linear-gradient(32deg, transparent 44%, rgba(255, 226, 176, .85) 49.5%, transparent 55%),
+                radial-gradient(ellipse at 80% 10%, rgba(255, 150, 30, .7), transparent 65%),
+                linear-gradient(135deg, #3A1605, #6B2E08);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px
+        }
+
+        .thumb.alt {
+            background:
+                linear-gradient(-32deg, transparent 44%, rgba(255, 226, 176, .85) 49.5%, transparent 55%),
+                radial-gradient(ellipse at 20% 100%, rgba(255, 150, 30, .65), transparent 65%),
+                linear-gradient(135deg, #1F0A03, #4A1E06);
+            color: var(--glow)
+        }
+
+        .tools {
+            margin-top: 12px;
+            font-size: 14px
+        }
+
+        .tools b {
+            color: var(--amber-bright);
+            font-weight: 600
+        }
+
+        /* View Project button */
+        .btn-sm {
+            margin-top: 16px;
+            padding: 8px 22px;
+            font: 500 14px var(--font);
+            cursor: pointer;
+            color: var(--text)
+        }
+
+        /* Screenshot popup */
+        .shots {
+            width: min(92vw, 960px);
+            max-height: 90vh;
+            margin: auto;
+            padding: 28px;
+            color: var(--text);
+            background: var(--bg-deep);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .6);
+            overflow-y: auto
+        }
+
+        .shots::backdrop {
+            background: rgba(10, 3, 1, .8);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px)
+        }
+
+        .shots-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px
+        }
+
+        .shots-head h3 {
+            font-size: 22px;
+            font-weight: 500;
+            line-height: 1.3
+        }
+
+        .shots-close {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%
+        }
+
+        .shots-close:hover {
+            background: var(--glass-hover)
+        }
+
+        .shot {
+            margin-bottom: 24px
+        }
+
+        .shot:last-child {
+            margin-bottom: 0
+        }
+
+        .shot img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border)
+        }
+
+        .shot figcaption {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: center
+        }
+
+        /* Contact */
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 500
+        }
+
+        .contact-card p {
+            color: var(--text)
+        }
+
+        .contact-card small {
+            display: block;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600
+        }
+
+        .ico {
+            display: inline-grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(145deg, rgba(255, 170, 70, .4), rgba(120, 50, 8, .5));
+            border: 1px solid rgba(255, 190, 110, .45);
+            color: var(--glow);
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0
+        }
+
+        .socials {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 28px
+        }
+
+        .socials a {
+            padding: 9px 26px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            transition: border-color .2s, background .2s
+        }
+
+        .socials a:hover {
+            border-color: rgba(255, 190, 110, .6);
+            background: var(--glass-hover)
+        }
+
+        /* Footer: transparent, same background as header and page */
+        footer {
+            padding: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            background: rgba(26, 8, 2, .25);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(255, 220, 180, .1)
+        }
+
+        @media(max-width:768px) {
+            header {
+                flex-wrap: wrap
+            }
+
+            .menu-btn {
+                display: block
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                padding-top: 12px
+            }
+
+            nav.open {
+                display: flex
+            }
+
+            section {
+                padding: 64px 6%
+            }
+
+            .home {
+                grid-template-columns: 1fr;
+                text-align: center;
+                min-height: auto;
+                gap: 36px
+            }
+
+            .home .actions {
+                justify-content: center
+            }
+
+            .intro {
+                margin-inline: auto
+            }
+
+            .photo-wrap {
+                order: -1;
+                max-width: 250px
+            }
+
+            .shots {
+                padding: 18px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            html {
+                scroll-behavior: auto
+            }
+
+            .btn,
+            .card,
+            nav a,
+            .socials a {
+                transition: none
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <!-- NAVIGATION -->
-    <header class="navbar">
-        <a href="#home" class="logo">Marvzy<span>.</span></a>
-
-        <nav>
-            <a href="#home">Home</a>
+    <header>
+        <a href="#home" class="logo">MyPortfolioDesign<span>.</span></a>
+        <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">Menu</button>
+        <nav id="nav">
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#education">Education</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
         </nav>
     </header>
 
     <main>
-        <!-- HOME -->
-        <section class="hero" id="home">
-            <p class="eyebrow">BSIT STUDENT · ASPIRING WEB DEVELOPER</p>
-
-            <h1>Building digital solutions through technology.</h1>
-
-            <p class="hero-description">
-                Hello! I'm Marvzy, an Information Technology student
-                interested in web development, database management,
-                and creating useful digital solutions.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#projects" class="btn-primary">Explore My Projects</a>
-                <a href="#contact" class="btn-secondary">Contact Me</a>
+        <!-- Home -->
+        <section id="home" class="home">
+            <div>
+                <p class="hello">Hello, I'm</p>
+                <h1>Marvin N. Genovania</h1>
+                <p class="role">BS Information Technology Student</p>
+                <p class="intro">Welcome to my portfolio. Here you will find my background, skills, and the projects I
+                    built while studying at City College of Calamba.</p>
+                <div class="actions">
+                    <a href="#projects" class="btn">View Projects</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
             </div>
-
-            <p class="location">Based in the Philippines</p>
+            <div class="photo-wrap">
+                <img class="photo" src="images/profile.jpg" alt="Photo of Marvin N. Genovania">
+            </div>
         </section>
 
-        <!-- ABOUT -->
-        <section class="section" id="about">
-            <div class="section-heading">
-                <p class="eyebrow">GET TO KNOW ME</p>
-                <h2>About Me</h2>
-            </div>
-
-            <div class="about-content">
+        <!-- About -->
+        <section id="about">
+            <span class="eyebrow">Who I am</span>
+            <h2 class="section-title">About Me</h2>
+            <div class="card about-card">
                 <p>
-                    I am a Bachelor of Science in Information Technology
-                    student with an interest in building websites and
-                    developing information systems.
-                </p>
-
-                <p>
-                    Through academic projects and practical activities,
-                    I have gained experience in web development,
-                    database management, and computer networking.
-                    I enjoy learning new technologies and applying
-                    them to solve real-world problems.
+                    I am a Bachelor of Science in Information Technology student at City College of
+                    Calamba with an interest in web development, programming, and technology.
+                    I enjoy learning new skills and building projects that improve my knowledge
+                    and experience.
                 </p>
             </div>
         </section>
 
-        <!-- SKILLS -->
-        <section class="section" id="skills">
-            <div class="section-heading">
-                <p class="eyebrow">WHAT I WORK WITH</p>
-                <h2>Technical Skills</h2>
-            </div>
-
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Web Development</h3>
-                    <p>HTML · CSS · JavaScript · PHP</p>
-                </div>
-
-                <div class="skill-card">
-                    <h3>Database</h3>
-                    <p>MySQL</p>
-                </div>
-
-                <div class="skill-card">
-                    <h3>Development Tools</h3>
-                    <p>Visual Studio Code · XAMPP · GitHub</p>
-                </div>
-
-                <div class="skill-card">
-                    <h3>Networking</h3>
-                    <p>Cisco Packet Tracer · IP Configuration · OSPF</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section class="section" id="projects">
-            <div class="section-heading">
-                <p class="eyebrow">MY RECENT WORK</p>
-                <h2>Featured Projects</h2>
-                <p class="section-description">
-                    Academic projects and practical activities
-                    that demonstrate my technical skills.
-                </p>
-            </div>
-
-            <div class="projects-grid">
-
-                <article class="project-card">
-                    <div class="project-number">01 / WEB DEVELOPMENT</div>
-
-                    <h3>Go Urban Smile Dental Clinic System</h3>
-
-                    <p>
-                        A web-based dental clinic appointment and
-                        management system with automated email
-                        notifications for appointment updates
-                        and reminders.
-                    </p>
-
-                    <div class="project-tags">
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>PHP</span>
-                        <span>MySQL</span>
-                    </div>
-
-                    <div class="project-details">
-                        <p><strong>Role:</strong> Student Developer</p>
-                        <p><strong>Tools:</strong> VS Code, XAMPP</p>
-                        <p><strong>Learning:</strong> Database integration,
-                        appointment management, and email notifications.</p>
-                    </div>
-
-                    <span class="project-status">Academic Project</span>
+        <!-- Skills -->
+        <section id="skills">
+            <span class="eyebrow">What I know</span>
+            <h2 class="section-title">My Skills</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>Technical Skills</h3>
+                    <ul class="chips accent">
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                        <li>PHP</li>
+                        <li>MySQL</li>
+                    </ul>
                 </article>
-
-                <article class="project-card">
-                    <div class="project-number">02 / COMPUTER NETWORKING</div>
-
-                    <h3>Cisco Network Configuration</h3>
-
-                    <p>
-                        A networking laboratory activity involving
-                        router configuration, IP addressing,
-                        OSPF routing, and network connectivity testing
-                        using Cisco Packet Tracer.
-                    </p>
-
-                    <div class="project-tags">
-                        <span>Cisco Packet Tracer</span>
-                        <span>IPv4</span>
-                        <span>OSPF</span>
-                    </div>
-
-                    <div class="project-details">
-                        <p><strong>Role:</strong> Student</p>
-                        <p><strong>Tools:</strong> Cisco Packet Tracer</p>
-                        <p><strong>Learning:</strong> Router configuration,
-                        routing protocols, and network troubleshooting.</p>
-                    </div>
-
-                    <span class="project-status">Academic Activity</span>
+                <article class="card">
+                    <h3>Personal Skills</h3>
+                    <ul class="chips">
+                        <li>Communication</li>
+                        <li>Teamwork</li>
+                        <li>Problem Solving</li>
+                        <li>Time Management</li>
+                    </ul>
                 </article>
-
             </div>
         </section>
 
-        <!-- CONTACT -->
-        <section class="section contact-section" id="contact">
-            <div class="section-heading">
-                <p class="eyebrow">GET IN TOUCH</p>
-                <h2>Let's Connect.</h2>
-                <p class="section-description">
-                    Feel free to reach out for opportunities,
-                    collaboration, or professional connections.
-                </p>
+        <!-- Experience -->
+        <section id="experience">
+            <span class="eyebrow">What I did</span>
+            <h2 class="section-title">My Experience</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>Academic Project Developer</h3>
+                    <p class="meta">2026 - Present</p>
+                    <p>Developed academic projects using HTML, CSS, PHP, and MySQL as part of my IT studies.</p>
+                </article>
+                <article class="card">
+                    <h3>Student Activities</h3>
+                    <p>Participated in programming activities, group projects, and technical laboratory exercises.</p>
+                </article>
             </div>
+        </section>
 
-            <div class="contact-links">
-                <a href="https://github.com/Marvzy0519"
-                   target="_blank" rel="noopener noreferrer">
-                    GitHub ↗
-                </a>
+        <!-- Education -->
+        <section id="education">
+            <span class="eyebrow">Where I studied</span>
+            <h2 class="section-title">Education</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>Bachelor of Science in Information Technology</h3>
+                    <p class="meta">2023 - Present</p>
+                    <p>City College of Calamba</p>
+                </article>
+                <article class="card">
+                    <h3>Senior High School</h3>
+                    <p class="meta">Graduation Year</p>
+                    <p>Your Previous School</p>
+                </article>
+            </div>
+        </section>
 
-                <!-- Replace with your actual email -->
-                <a href="mailto:YOUR_EMAIL@example.com">
-                    Email ↗
-                </a>
+        <!-- Projects -->
+        <section id="projects">
+            <span class="eyebrow">What I built</span>
+            <h2 class="section-title">My Projects</h2>
+            <div class="grid">
+                <article class="card project">
+                    <div class="thumb">Dental Clinic</div>
+                    <h3>Dental Clinic Management System</h3>
+                    <p>A web-based dental clinic appointment and management system with automated email notifications for appointment updates and reminders.</p>
+                    <p class="tools"><b>Tools:</b> HTML, CSS, PHP, MySQL</p>
+                    <button class="btn btn-sm" data-open="shots-dental">View Project</button>
+                </article>
+                <article class="card project">
+                    <div class="thumb alt">Gitara Muna</div>
+                    <h3>Gitara Muna – Guitar Learning Website</h3>
+                    <p>A beginner-friendly guitar website in Filipino featuring interactive chord diagrams with Major and Minor filters, easy songs, tutorials, and tips for new players.</p>
+                    <p class="tools"><b>Tools:</b> HTML, CSS, JavaScript</p>
+                    <button class="btn btn-sm" data-open="shots-gitara">View Project</button>
+                </article>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact">
+            <span class="eyebrow">Get in touch</span>
+            <h2 class="section-title">Contact Me</h2>
+            <div class="grid">
+                <article class="card contact-card">
+                    <span class="ico">@</span>
+                    <div><small>Email</small>
+                        <p>marvgenovania@gmail.com</p>
+                    </div>
+                </article>
+                <article class="card contact-card">
+                    <span class="ico">&#9990;</span>
+                    <div><small>Phone</small>
+                        <p>09484263218</p>
+                    </div>
+                </article>
+                <article class="card contact-card">
+                    <span class="ico">&#9906;</span>
+                    <div><small>Location</small>
+                        <p>Philippines</p>
+                    </div>
+                </article>
+            </div>
+            <div class="socials">
+                <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- Dental Clinic screenshots popup -->
+    <dialog id="shots-dental" class="shots" aria-label="Dental Clinic Management System screenshots">
+        <div class="shots-head">
+            <h3>Dental Clinic Management System</h3>
+            <button class="shots-close" aria-label="Close">&#10005;</button>
+        </div>
+        <figure class="shot">
+            <img src="images/dental home.jpg" alt="Go Urban Smile landing page" loading="lazy">
+            <figcaption>Landing Page</figcaption>
+        </figure>
+        <figure class="shot">
+            <img src="images/dental dashboard.jpg" alt="Patient dashboard of the dental system" loading="lazy">
+            <figcaption>Patient Dashboard</figcaption>
+        </figure>
+    </dialog>
+
+    <!-- Gitara Muna screenshots popup -->
+    <dialog id="shots-gitara" class="shots" aria-label="Gitara Muna screenshots">
+        <div class="shots-head">
+            <h3>Gitara Muna – Guitar Learning Website</h3>
+            <button class="shots-close" aria-label="Close">&#10005;</button>
+        </div>
+        <figure class="shot">
+            <img src="images/gitara home.jpg" alt="Gitara Muna home page" loading="lazy">
+            <figcaption>Home Page</figcaption>
+        </figure>
+        <figure class="shot">
+            <img src="images/gitara chords.jpg" alt="Beginner chords section with Major and Minor filters" loading="lazy">
+            <figcaption>Beginner Chords Section</figcaption>
+        </figure>
+    </dialog>
+
     <footer>
-        <p>© 2026 Marvzy0519. All rights reserved.</p>
-        <a href="#home">Back to top ↑</a>
+        <p>&copy; 2026 Marvin N. Genovania | Personal Portfolio</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.querySelector(".menu-btn");
+        const nav = document.getElementById("nav");
+
+        menuBtn.addEventListener("click", () => {
+            const isOpen = nav.classList.toggle("open");
+            menuBtn.setAttribute("aria-expanded", isOpen);
+        });
+
+        nav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                nav.classList.remove("open");
+                menuBtn.setAttribute("aria-expanded", "false");
+            });
+        });
+
+        // Highlight the nav link of the section in view
+        const links = nav.querySelectorAll("a");
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        links.forEach((l) =>
+                            l.classList.toggle("active", l.getAttribute("href") === "#" + entry.target.id)
+                        );
+                    }
+                });
+            },
+            { rootMargin: "-40% 0px -55% 0px" }
+        );
+        document.querySelectorAll("main section").forEach((s) => observer.observe(s));
+
+        // View Project popup
+        document.querySelectorAll("[data-open]").forEach((btn) => {
+            const dlg = document.getElementById(btn.dataset.open);
+            btn.addEventListener("click", () => dlg.showModal());
+            dlg.querySelector(".shots-close").addEventListener("click", () => dlg.close());
+            // close when clicking the dark area outside the popup
+            dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+        });
+    </script>
 </body>
+
 </html>
